@@ -24,6 +24,8 @@ class Vector:
 		except Exception as e:
 			raise TypeError("x and y must be float numbers")
 
+		self._id = -1
+
 	@property
 	def x(self):
 		"""renvoie la valeur de x l'orsque l'on fait object.x
@@ -78,7 +80,7 @@ class Vector:
 		Returns:
 		    float: norme du vecteur
 		"""
-		return (self.x ** 2 + self.y ** 2) ** 0.5
+		return (self._x ** 2 + self._y ** 2) ** 0.5
 
 	def __str__(self):
 		"""converti le vecteur en chane de caractère
@@ -86,7 +88,7 @@ class Vector:
 		Returns:
 		    string: le vecteur sous forme de string
 		"""
-		return "Vector : x=" + str(self.x) + " y=" + str(self.y)
+		return "Vector : x=" + str(self._x) + " y=" + str(self._y)
 
 	def __repr__(self):
 		"""représentation du vecteur l'orsque l'on fait un print()
@@ -112,12 +114,12 @@ class Vector:
 		"""
 		temp = Vector()
 		if type(VectorObject) == Vector:
-			temp.x = self.x + VectorObject.x
-			temp.y = self.y + VectorObject.y
+			temp.x = self._x + VectorObject.x
+			temp.y = self._y + VectorObject.y
 		else:
 			try:
-				temp.x = self.x + float(VectorObject)
-				temp.y = self.y + float(VectorObject)
+				temp.x = self._x + float(VectorObject)
+				temp.y = self._y + float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
 		return temp
@@ -137,12 +139,12 @@ class Vector:
 		"""
 		temp = Vector()
 		if type(VectorObject) == Vector:
-			temp.x = self.x - VectorObject.x
-			temp.y = self.y - VectorObject.y
+			temp.x = self._x - VectorObject.x
+			temp.y = self._y - VectorObject.y
 		else:
 			try:
-				temp.x = self.x - float(VectorObject)
-				temp.y = self.y - float(VectorObject)
+				temp.x = self._x - float(VectorObject)
+				temp.y = self._y - float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
 		return temp
@@ -162,12 +164,12 @@ class Vector:
 		"""
 		temp = Vector()
 		if type(VectorObject) == Vector:
-			temp.x = self.x * VectorObject.x
-			temp.y = self.y * VectorObject.y
+			temp.x = self._x * VectorObject.x
+			temp.y = self._y * VectorObject.y
 		else:
 			try:
-				temp.x = self.x * float(VectorObject)
-				temp.y = self.y * float(VectorObject)
+				temp.x = self._x * float(VectorObject)
+				temp.y = self._y * float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
 		return temp
@@ -187,12 +189,12 @@ class Vector:
 		"""
 		temp = Vector()
 		if type(VectorObject) == Vector:
-			temp.x = self.x / VectorObject.x
-			temp.y = self.y / VectorObject.y
+			temp.x = self._x / VectorObject.x
+			temp.y = self._y / VectorObject.y
 		else:
 			try:
-				temp.x = self.x / float(VectorObject)
-				temp.y = self.y / float(VectorObject)
+				temp.x = self._x / float(VectorObject)
+				temp.y = self._y / float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
 		return temp
@@ -206,15 +208,18 @@ class Vector:
 		Raises:
 		    TypeError: Si l'argument n'est pas un vecteur il doit être un nombre
 		"""
+		
 		if type(VectorObject) == Vector:
-			self.x += VectorObject.x
-			self.y += VectorObject.y
+			self._x += VectorObject.x
+			self._y += VectorObject.y
 		else:
 			try:
-				self.x += float(VectorObject)
-				self.y += float(VectorObject)
+				self._x += float(VectorObject)
+				self._y += float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
+
+		return self
 
 	def __isub__(self, VectorObject):
 		"""aplique l'opérateur -= au vecteur
@@ -226,14 +231,16 @@ class Vector:
 		    TypeError: Si l'argument n'est pas un vecteur il doit être un nombre
 		"""
 		if type(VectorObject) == Vector:
-			self.x -= VectorObject.x
-			self.y -= VectorObject.y
+			self._x -= VectorObject.x
+			self._y -= VectorObject.y
 		else:
 			try:
-				self.x -= float(VectorObject)
-				self.y -= float(VectorObject)
+				self._x -= float(VectorObject)
+				self._y -= float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
+
+		return self
 
 	def __imul__(self, VectorObject):
 		"""aplique l'opérateur *= au vecteur
@@ -246,14 +253,16 @@ class Vector:
 		    TypeError: Si l'argument n'est pas un vecteur il doit être un nombre
 		"""
 		if type(VectorObject) == Vector:
-			self.x *= VectorObject.x
-			self.y *= VectorObject.y
+			self._x *= VectorObject.x
+			self._y *= VectorObject.y
 		else:
 			try:
-				self.x *= float(VectorObject)
-				self.y *= float(VectorObject)
+				self._x *= float(VectorObject)
+				self._y *= float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
+
+		return self
 
 	def __itruediv__(self, VectorObject):
 		"""aplique l'opérateur /= au vecteur
@@ -265,11 +274,19 @@ class Vector:
 		    TypeError: Si l'argument n'est pas un vecteur il doit être un nombre
 		"""
 		if type(VectorObject) == Vector:
-			self.x /= VectorObject.x
-			self.y /= VectorObject.y
+			self._x /= VectorObject.x
+			self._y /= VectorObject.y
 		else:
 			try:
-				self.x /= float(VectorObject)
-				self.y /= float(VectorObject)
+				self._x /= float(VectorObject)
+				self._y /= float(VectorObject)
 			except Exception as e:
 				raise TypeError("non Vector value must be float numbers")
+		return self
+
+	def draw(self,canvas,x,y,factor=1):
+		print(x,y,x+self._x*factor,y+self._y*factor)
+		if self._id == -1:
+			self._id = canvas.create_line(x,y,x+self._x*factor,y+self._y*factor,fill="red")
+		else:
+			canvas.coords(self._id,x,y,self._x*factor+x,self._y*factor+y)
