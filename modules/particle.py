@@ -3,26 +3,28 @@
 from modules.objects import *
 from tkinter import Canvas
 
+
 class Particle(Object):
 
-	"""Summary
-	"""
-	
-	def __init__(self,x=0.0,y=0.0,mass=0.0,radius=0.0,speed=Vector(),acceleration=Vector()):
+	"""Summary"""
+
+	def __init__(
+		self, x=0.0, y=0.0, mass=0.0, radius=0.0, speed=Vector(), acceleration=Vector()
+	):
 		"""Summary
-		
+
 		Args:
-		    x (float, optional): Description
-		    y (float, optional): Description
-		    mass (float, optional): Description
-		    radius (float, optional): Description
-		    speed (TYPE, optional): Description
-		    acceleration (TYPE, optional): Description
-		
+			x (float, optional): Description
+			y (float, optional): Description
+			mass (float, optional): Description
+			radius (float, optional): Description
+			speed (Vector, optional): Description
+			acceleration (Vector, optional): Description
+
 		Raises:
-		    TypeError: Description
+			TypeError: Description
 		"""
-		Object.__init__(self,x,y,mass,speed,acceleration)
+		Object.__init__(self, x, y, mass, speed, acceleration)
 		try:
 			self._radius = float(radius)
 		except Exception as e:
@@ -31,21 +33,21 @@ class Particle(Object):
 	@property
 	def radius(self):
 		"""renvoie radius
-		
+
 		Returns:
-		    float: radius
+			float: radius
 		"""
 		return self._radius
 
 	@radius.setter
 	def radius(self, radius):
 		"""permet de vérifier la valeur du rayon avant modification
-		
+
 		Args:
-		    radius (float): la nouvelle valeur de radius
-		
+			radius (float): la nouvelle valeur de radius
+
 		Raises:
-		    TypeError: radius doit être un nombre flotant
+			TypeError: radius doit être un nombre flotant
 		"""
 		try:
 			self._radius = radius
@@ -54,9 +56,9 @@ class Particle(Object):
 
 	def __str__(self):
 		"""représentation de l'objet sous forme de chaine de caractère
-		
+
 		Returns:
-		    string: l'objet sous forme de string
+			string: l'objet sous forme de string
 		"""
 		return (
 			"Particle : mass="
@@ -73,13 +75,27 @@ class Particle(Object):
 			+ str(self._acceleration)
 		)
 
-	def draw(self,canvas):
+	def draw(self, canvas):
 		"""dessine l'objet a l'écran
-		
+
 		Args:
-		    canvas (tkinter.Canvas): zone de dessin
+			canvas (tkinter.Canvas): zone de dessin
 		"""
 		if self._id == -1:
-			self._id = canvas.create_oval(self._x,self._y,self._x+self._radius,self._y+self._radius,fill="white")
+			self._id = canvas.create_oval(
+				self._x - self._radius/2,
+				self._y - self._radius/2,
+				self._x + self._radius/2,
+				self._y + self._radius/2,
+				fill="white",
+			)
 		else:
-			canvas.coords(self._id,self._x,self._y,self._x+self._radius,self._y+self._radius)
+			canvas.coords(
+				self._id,
+				self._x - self._radius/2,
+				self._y - self._radius/2,
+				self._x + self._radius/2,
+				self._y + self._radius/2,
+			)
+
+		self._acceleration.draw(canvas,self._x,self._y)
